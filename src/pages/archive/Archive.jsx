@@ -1,0 +1,142 @@
+import { useEffect, useState, useRef } from "react";
+import { ReactLenis } from "lenis/react";
+
+import "./Archive.css";
+
+import Transition from "../../components/transition/Transition";
+import Preview from "../../components/preview/Preview";
+import { previewImgs } from "../../components/preview/previewImages";
+import tickSfx from "../../assets/sfx/tick.wav";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+gsap.registerPlugin(ScrollTrigger);
+
+const Archive = () => {
+  const [archiveList, setArchiveList] = useState([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef(null);
+
+  const archives = [
+    { name: "Starbucks 01", category: "Logo Design" },
+    { name: "Nadar", category: "Identity Brand" },
+    { name: "Marcos", category: "Logo Design" },
+    { name: "Japan Trip", category: "Logo Design" },
+    { name: "SunDown", category: "Logo Design" },
+    { name: "Marcos", category: " Design" },
+    { name: "Queso", category: "No se que poner" },
+    { name: "SToto", category: "Arte" },
+    { name: "PruebaLoca", category: "Mapping" },
+    // { name: "Parallel Worlds", category: "UX/UI Design" },
+    // { name: "Invisible Threads", category: "Fashion Styling" },
+    // { name: "Beyond the Surface", category: "Augmented Reality" },
+  ];
+
+  useEffect(() => {
+    const initialSet = Array(120)
+      .fill()
+      .flatMap((_, i) =>
+        archives.map((archive, j) => ({
+          ...archive,
+          name: `${archive.name}`,
+          id: i * archives.length + j,
+          originalIndex: j,
+        }))
+      );
+    setArchiveList(initialSet);
+  }, []);
+
+  useEffect(() => {
+    const tickSound = new Audio(tickSfx);
+    const buffer = 100;
+
+    const handleScroll = () => {
+      const position = window.scrollY;
+      const offset = 400; // Account for top: -25em (approx 400px)
+      const index = Math.floor((position + offset) / buffer) % previewImgs.length;
+
+      setActiveIndex((prevIndex) => {
+        if (prevIndex !== index) {
+          tickSound.play();
+          return index;
+        }
+        return prevIndex;
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (containerRef.current && archiveList.length > 0) {
+      ScrollTrigger.create({
+        scroller: containerRef.current,
+        start: 0,
+        end: "max",
+        onLeave: (self) => {
+          self.scroll(1);
+          ScrollTrigger.update();
+        },
+        onLeaveBack: (self) => {
+          self.scroll(ScrollTrigger.maxScroll(containerRef.current) - 1);
+          ScrollTrigger.update();
+        },
+      });
+
+      const archiveItems =
+        containerRef.current.querySelectorAll(".archive-item");
+      archiveItems.forEach((item) => {
+        gsap.to(item, {
+          repeat: 1,
+          yoyo: true,
+          ease: "none",
+          scrollTrigger: {
+            scroller: containerRef.current,
+            trigger: item,
+            start: "center bottom",
+            end: "center top",
+            scrub: true,
+          },
+        });
+      });
+    }
+  }, [archiveList]);
+
+  return (
+    <ReactLenis root>
+      <div
+        className="archive"
+        ref={containerRef}
+        style={{
+          height: "100vh",
+          top: "-25em",
+          //  overflowY: "auto"
+          // to enable infinite scrolling, uncomment `overflowY: "auto"` and remove the <ReactLenis root> component from root
+        }}
+      >
+        <div className="container">
+          <div className="overlay"></div>
+
+          <Preview imgSrc={previewImgs[activeIndex]} />
+
+          {archiveList.map((archive) => (
+            <div className="row" key={archive.id}>
+              <div className="archive-item">
+                <div className={`archive-details ${archive.originalIndex === activeIndex ? "active" : ""}`}>
+                  <h1 id="archive-name">{archive.name}</h1>
+                  <p id="archive-category">{archive.category}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </ReactLenis>
+  );
+};
+
+export default Transition(Archive);
