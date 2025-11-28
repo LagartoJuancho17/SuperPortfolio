@@ -33,20 +33,20 @@ const Navbar = () => {
 
   const articleItems = [
     {
-      url: "https://www.youtube.com/codegrid",
-      title: "Plause Studio",
+      url: "",
+      title: "Queso Studio",
       subTitle: "Agency — Crafting for a minimal experience",
       img: ArticleImg1,
     },
     {
-      url: "https://www.instagram.com/codegridweb/",
-      title: "Awkward",
+      url: "",
+      title: "Marcos",
       subTitle: "Design for a better future and past",
       img: ArticleImg2,
     },
     {
-      url: "https://x.com/codegridweb",
-      title: "Syne",
+      url: "",
+      title: "Hola",
       subTitle: "Showcase — Prove for a better website",
       img: ArticleImg3,
     },

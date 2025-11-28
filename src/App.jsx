@@ -19,11 +19,11 @@ function App() {
   const location = useLocation();
 
   const pageTitles = {
-    "/": "Home | Tobias Arraiza | CG MWT AUG 2024",
-    "/projects": "Proyectos | Tobias Arraiza | CG MWT AUG 2024",
-    "/archive": "Archivo | Tobias Arraiza | CG MWT AUG 2024",
-    "/information": "Informacion | Tobias Arraiza | CG MWT AUG 2024",
-    "/sample-project": "Proyecto | Tobias Arraiza | CG MWT AUG 2024",
+    "/": "Home | Tobias Arraiza ",
+    "/projects": "Proyectos | Tobias Arraiza",
+    "/archive": "Archivo | Tobias Arraiza ",
+    "/information": "Informacion | Tobias Arraiza ",
+    "/sample-project": "Proyecto | Tobias Arraiza ",
   };
 
   useEffect(() => {

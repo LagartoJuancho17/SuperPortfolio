@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="footer-col">
         <div className="footer-sub-col">
           <div className="footer-link">
-            <Link to="https://www.youtube.com/@codegrid/">
+            <Link to="mailto:tobiasarraiza17@gmail.com">
               &#x2192; tobiasarraiza17@gmail.com
             </Link>
           </div>

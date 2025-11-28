@@ -100,7 +100,7 @@ const Information = () => {
             </div> */}
           </div>
 
-          <div className="info-content-2">
+          {/* <div className="info-content-2">
             <div className="col">
               <p>Exhibitions, Talks, and Workshops</p>
               <div className="divider"></div>
@@ -119,7 +119,7 @@ const Information = () => {
                 ))}
               </ul>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </ReactLenis>

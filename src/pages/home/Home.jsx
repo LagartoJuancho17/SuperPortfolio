@@ -65,7 +65,7 @@ const Home = () => {
 
             <Link
               id="hero-link-02"
-              to="https://www.instagram.com//"
+              to="https://github.com/LagartoJuancho17"
               target="_blank"
               className="word fancy"
             >
